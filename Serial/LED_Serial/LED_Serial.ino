@@ -1,3 +1,6 @@
+//This code needs a grounded red LED in series with a 220 Ohm resistor on pin 2
+
+
 const int ledPin = 2;
 
 void setup() {
