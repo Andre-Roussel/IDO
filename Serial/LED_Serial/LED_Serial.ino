@@ -1,6 +1,6 @@
 //This code needs a grounded red LED in series with a 220 Ohm resistor on pin 2
 
-
+//This bit of code enables the user to input numbers from 0 to 255 from the serial monitor to change the intensity of a LED
 const int ledPin = 2;
 
 void setup() {
