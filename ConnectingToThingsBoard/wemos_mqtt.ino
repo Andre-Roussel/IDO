@@ -2,13 +2,13 @@
 #include <ESP8266WiFi.h>
 #include <ThingsBoard.h>
 
-#define WIFI_AP "Objets_IDO"
-#define WIFI_PASSWORD "42Bidules!"
+#define WIFI_AP "" //SSID
+#define WIFI_PASSWORD ""
 
-#define TOKEN "mtJOKgDaZmp399mtRiMK"
+#define TOKEN ""  //MQTT device token from thingsboard
 
 
-char thingsboardServer[] = "192.168.2.4";
+ char thingsboardServer[] = "";  //thingsboard server ip address
 
 WiFiClient wifiClient;
 
