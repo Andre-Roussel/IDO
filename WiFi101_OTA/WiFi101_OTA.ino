@@ -1,22 +1,13 @@
 /*
 
- This example connects to an WPA encrypted WiFi network.
- Then it prints the  MAC address of the Wifi shield,
- the IP address obtained, and other network details.
- It then polls for sketch updates over WiFi, sketches
- can be updated by selecting a network port from within
- the Arduino IDE: Tools -> Port -> Network Ports ...
+Demo
 
- Circuit:
- * WiFi shield attached
+Minimum needed for over the air update
+Connect your arduino to usb port
+Flash the code
+Use the IP port to update the arduino over the air
 
- created 13 July 2010
- by dlf (Metodo2 srl)
- modified 31 May 2012
- by Tom Igoe
- modified 16 January 2017
- by Sandeep Mistry
- */
+  */
  
 #include <SPI.h>
 #include <WiFi101.h>
