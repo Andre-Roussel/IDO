@@ -1,2 +1,2 @@
-#define SECRET_SSID "Objets_IDO"
-#define SECRET_PASS "42Bidules!"
+#define SECRET_SSID ""
+#define SECRET_PASS ""
