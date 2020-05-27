@@ -89,17 +89,26 @@ String payload = "{";
 void loop() {
   mqqtClient.loop(); //allow the client to process incoming messages and maintain its connection to the server.
 
-  if (millis() - lastMillis > 1000) {
-    lastMillis = millis();
-
-    float h = dht.readHumidity();  // Get temperature
-    float t = dht.readTemperature(); // Get Humidity
-
-    String payload = prepareJSONstring(t,h); // Prepare message
-    SendMessage(payload); // Send the message to broker
-  
-    lastMillis = millis();
-  }
+ if(WiFi.status()==3 && mqqtClient.connected())  // Does connection still existe
+ {
+      if (millis() - lastMillis > 1000) {
+        lastMillis = millis();
+    
+        float h = dht.readHumidity();  // Get temperature
+        float t = dht.readTemperature(); // Get Humidity
+    
+        String payload = prepareJSONstring(t,h); // Prepare message
+        SendMessage(payload); // Send the message to broker
+      
+        lastMillis = millis();
+      }
+   }
+ else //connection lost so reconnect
+ {
+    status=WL_IDLE_STATUS;
+    WiFi.end();
+    connect();
+ }
 }
 
 void SendMessage(String payload){
