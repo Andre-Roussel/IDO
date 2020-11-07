@@ -2,22 +2,14 @@
 //object to the thingsBoard server
 
 #include "WIFIConnector.h"
-#include "MQTTConnector.h";
+#include "MQTTConnector.h"
 
-#include "DHT.h"
-
-#define DHTPIN 2 
-#define DHTTYPE DHT22  
 
 
 WiFiClient wifiClient;  // Create a WIFI client to connected to the net
 MQTTClient mqqtClient;  // Create a MQTT client to handle messagin between object and broker
 
-
-DHT dht(DHTPIN, DHTTYPE); //Define and create the correct DHT sensor instance
-
-unsigned long lastMillis = 0;  //Used instead of delay to send data every second
-
+float lastMillis;
 
 //Generic connection function 
 
@@ -56,19 +48,17 @@ void InitWifiConnection() {
 
 }
 
-/*
+
 void messageReceived(String &topic, String &payload) {
   Serial.println("incoming: " + topic + " - " + payload);
 }
-*/
+
 
 void setup() {
 
-  delay(15000); // 
   Serial.begin(9600);
   connect();   //Establish WIFI and MQTT Connections
-  dht.begin(); //Start communication with DHT22 sensor
-  Serial.println("Sending information");
+
 }
 
 
@@ -89,17 +79,26 @@ String payload = "{";
 void loop() {
   mqqtClient.loop(); //allow the client to process incoming messages and maintain its connection to the server.
 
-  if (millis() - lastMillis > 1000) {
-    lastMillis = millis();
-
-    float h = dht.readHumidity();  // Get temperature
-    float t = dht.readTemperature(); // Get Humidity
-
-    String payload = prepareJSONstring(t,h); // Prepare message
-    SendMessage(payload); // Send the message to broker
-  
-    lastMillis = millis();
-  }
+ if(WiFi.status()==3 && mqqtClient.connected())  // Does connection still existe
+ {
+      if (millis() - lastMillis > 30000) {
+        lastMillis = millis();
+    
+        float h = millis();
+        float t = millis();
+    
+        String payload = prepareJSONstring(t,h); // Prepare message
+        SendMessage(payload); // Send the message to broker
+      
+        lastMillis = millis();
+      }
+   }
+ else //connection lost so reconnect
+ {
+    status=WL_IDLE_STATUS;
+    WiFi.end();
+    connect();
+ }
 }
 
 void SendMessage(String payload){
