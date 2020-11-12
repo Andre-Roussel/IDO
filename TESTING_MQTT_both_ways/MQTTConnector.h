@@ -1,6 +1,6 @@
 #include <MQTT.h>
 
-const char mqttServer[] = "192.168.2.4"; // IP adress of IDO ThingsBoard Server (Broker)
+const char mqttServer[] = "198.164.130.75"; // IP adress of IDO ThingsBoard Server (Broker)
 const int mqttServerPort = 1883; // broker mqtt port
 const char key[] = "RSYLkeXVal6oJ9okzA7z"; // broker device key
 const char secret[] = ""; // broker secret not needed for our setup

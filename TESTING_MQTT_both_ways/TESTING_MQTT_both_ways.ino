@@ -56,7 +56,7 @@ void InitWifiConnection() {
   Serial.print("Connecting to wifi...");
   
   while ( status != WL_CONNECTED) {
-    status = WiFi.begin(WIFI_SSID, WIFI_PASS);
+    status = WiFi.beginEnterprise(ssid, user, pass);
     Serial.print(".");
     delay(1000);
   }
