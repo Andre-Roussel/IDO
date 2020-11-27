@@ -10,6 +10,26 @@ int ledDelay;
 #include "WIFIConnector.h"
 #include "MQTTConnector.h"
 
+#include <Adafruit_NeoPixel.h>
+#ifdef __AVR__
+ #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
+#endif
+
+// Which pin on the Arduino is connected to the NeoPixels?
+#define PIN        6 // On Trinket or Gemma, suggest changing this to 1
+
+// How many NeoPixels are attached to the Arduino?
+#define NUMPIXELS 24 // Popular NeoPixel ring size
+
+// When setting up the NeoPixel library, we tell it how many pixels,
+// and which pin to use to send signals. Note that for older NeoPixel
+// strips you might need to change the third parameter -- see the
+// strandtest example for more information on possible values.
+Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+
+#define DELAYVAL 500 // Time (in milliseconds) to pause between pixels
+
+
 
 
 unsigned long time_now = 0;
@@ -18,12 +38,12 @@ void setup()
 {
   
   Serial.begin(9600);
-
+Serial.print("Made it in the setup");
   wifiConnect();
   MQTTConnect();
 
-  pinMode(LED_BUILTIN, OUTPUT);
   
+  pixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
 
 }
 
@@ -38,25 +58,26 @@ void loop()
 
     if(millis() >= time_now + ledDelay){
         time_now += ledDelay;
-        digitalWrite(LED_BUILTIN, led_Status);
-        led_Status = !led_Status;
+        if(led_Status)
+        {
+          for(int i=0; i<NUMPIXELS; i++) { 
+            pixels.setPixelColor(i, pixels.Color(0, 150, 0));
+          }
+
+          pixels.show();   // Send the updated pixel colors to the hardware.
+          led_Status = !led_Status;
+          Serial.println("On");
+        }
+        else
+        {
+          pixels.clear();
+          pixels.show();
+          led_Status = !led_Status;
+          Serial.println("Off"); 
+        }
     }
 
 
-/*
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  KeyValue[0]= 1;
-  Serial.println("High");
-  //SendPayload(TelemetryKey,KeyValue);
-  delay(2000);                       // wait for a second
-  
-  
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  KeyValue[0]= 0;
-  Serial.println("Low");
-  //SendPayload(TelemetryKey,KeyValue);
-  delay(2000);
-  
-*/
+
 
 }

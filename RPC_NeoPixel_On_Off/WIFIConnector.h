@@ -3,7 +3,7 @@
 
 
 #include <WiFiNINA.h>
-#include <SPI.h>
+//#include <SPI.h>
 #include <ArduinoOTA.h>
 
 #include "wifiStatus.h"

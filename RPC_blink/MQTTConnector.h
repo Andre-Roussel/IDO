@@ -3,10 +3,9 @@
 const char mqttServer[] = "198.164.130.75"; // IP adress of IDO ThingsBoard Server (Broker) in the classroom
 const int mqttServerPort = 1883; // broker mqtt port
 
-const char key[] = "sa1nFhC5glh7lxPIRP8N"; // broker access token
+const char key[] = "dmDguOuxlxF12MiPK7YG"; // broker access token
 const char secret[] = ""; // broker secret
-const char device[] = "784fc410-2781-11eb-801b-ef2133956000"; // broker device identifier
-
+const char device[] = "a325bb50-2b27-11eb-801b-ef2133956000"; // broker device identifier
 
 //Modify this section to reflect the number of telemetry keys your are using
 
