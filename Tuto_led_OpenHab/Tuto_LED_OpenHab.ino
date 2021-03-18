@@ -1,10 +1,6 @@
-/*
- * Created by ArduinoGetStarted.com
- *
- * This example code is in the public domain
- *
- * Tutorial page: https://arduinogetstarted.com/tutorials/arduino-button-toggle-led
- */
+
+String cmd_Openhab_LED;
+const String pubTopic = "STATE_Arduino_LED";
 
 #include "WIFIConnector.h"
 #include "MQTTConnector.h"
@@ -24,7 +20,6 @@ void setup() {
   pinMode(LED_PIN, OUTPUT);          // set arduino pin to output mode
 
   currentButtonState = digitalRead(BUTTON_PIN);
-
   wifiConnect();
   MQTTConnect();
   
@@ -37,23 +32,37 @@ void loop() {
   
   lastButtonState    = currentButtonState;      // save the last state
   currentButtonState = digitalRead(BUTTON_PIN); // read new state
+  
 
   if(lastButtonState == HIGH && currentButtonState == LOW) {
     Serial.println();
-
+  
     // toggle state of LED
     ledState = !ledState;
     if(ledState)
     {
-      SendBasicPayload("LED_ON_OFF", "ON");
+      SendBasicPayload(pubTopic, "ON");
     }
     else
     {
-      SendBasicPayload("LED_ON_OFF", "OFF");
+      SendBasicPayload(pubTopic, "OFF");
     }
-    
-
-    // control LED arccoding to the toggled state
-    digitalWrite(LED_PIN, ledState); 
+     
   }
+
+  if(cmd_Openhab_LED == "ON")
+  {
+    Serial.println("cmd_Openhab_LED = ON");
+    ledState = HIGH;
+    cmd_Openhab_LED =  "";
+  }
+
+  if(cmd_Openhab_LED == "OFF")
+  {
+    Serial.println("cmd_Openhab_LED = OFF");
+    ledState = LOW;
+    cmd_Openhab_LED =  "";
+  }
+
+  digitalWrite(LED_PIN, ledState); 
 }

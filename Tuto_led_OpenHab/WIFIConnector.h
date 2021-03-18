@@ -10,10 +10,6 @@
 
 //please enter your sensitive data for log on
 
-//char ssid[] = "LeCamping";  // your WPA2 enterprise network SSID (name)
-//char user[] = "ba-ido-01";  // your WPA2 enterprise username
-//char pass[] = "Summer2019";  // your WPA2 enterprise password
-
 char ssid[] = "CCNB-IOT-WRLS";  // your WPA2 enterprise network SSID (name)
 char user[] = "ba-ido-01";  // your WPA2 enterprise username
 char pass[] = "iotwifi2020";  // your WPA2 enterprise password
